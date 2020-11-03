@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--Head-->
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <!--Nav-->
+    <%- include('../partials/nav.ejs') %>
+
+    <!--Alert-->
+    <%- include('../partials/alert.ejs') %>
+
+    <!--Index Body-->
+        
+        <div class="container">
+          <div class="card my-3 mx-2">
+            <div class="card-body shadow">
+              
+               Author: <%= author%>
+              <hr>
+              <h4 class="card-title"><%= blog.head %></h4>
+              <h6 class="card-subtitle mb-2 text-muted"><%= blog.subHead %></h6>
+              <hr>
+              <p class="card-text">
+                <%= blog.content %>
+              </p>
+              <% if (userStatus===false){%>
+              <a href="/blogs" class="card-link float-right m-2 ">Back</a>
+             <%}else{%>
+              <a href="" class="card-link float-right m-2 delete" data-apiid=<%= blog._id %> >Delete</a>
+              <a href="/update/<%= blog._id %>" class="card-link float-right m-2 ">Update</a>
+              <%}%>
+            </div>
+          </div>
+        </div>
+    
+
+    <!--Footer-->
+    <%- include('../partials/footer.ejs') %>
+
+    <!--Script-->
+    <%- include('../partials/script.ejs') %>
+    <script>
+      const bin = document.querySelector('a.delete');
+      bin.addEventListener('click', (event)=>{
+        event.preventDefault();
+         const api = `/user/${bin.dataset.apiid}`;
+         fetch(api,{
+             method:'Delete'
+         }).then((response)=>response.json())
+         .then(data=>{
+          window.location.href=data.redir;
+         })
+         .catch((err)=>{
+             console.log(err)
+         })
+      })
+  </script>
+  </body>
+</html>

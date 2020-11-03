@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <!--Head-->
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <!--Nav-->
+    <%- include('./partials/nav.ejs') %>
+    <section>
+        <div class="container fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card my-4 p-4 shadow mx-auto" style="max-width: 600px;">
+                        <div id="logform">
+                            <h4 class="text-center f-header">Enter registred email to continue</h4>
+                                        <form class="forgot">
+                                            <div class="form-group">
+                                              <label for="">Email address</label>
+                                              <input type="email" class="form-control" aria-describedby="" name="email" required>
+                                              <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                              <strong class="fmail"></strong>
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-dark fpas">Next</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </section>
+  <!--Footer-->
+  <%- include('./partials/footer.ejs') %>  
+
+ <!--Script-->
+<%- include('./partials/script.ejs') %>
+<script src="scripts/forgotPas.js"></script>
+  </body>
+</html>

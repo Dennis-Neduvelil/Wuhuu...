@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--Head-->
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <!--Nav-->
+    <%- include('../partials/nav.ejs') %>
+
+    <!--Alert-->
+    <%- include('../partials/alert.ejs') %>
+
+    
+    <div>
+      <div class="container fluid">
+        <div class="row">
+          <div class="col">
+          <div class=" card mb-3 mx-2 p-4 shadow">
+            <form action="/newblog" method="POST">
+                <h4 class="text-center">New Blog</h4>
+              <div class="form-group">
+                <label for="">Blog title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id=""
+                  placeholder="Blog title"
+                  name="head"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="">Blog subtitle</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id=""
+                  placeholder="Blog subtitle"
+                  name='subHead'
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="">Blog Content</label>
+                <textarea
+                  class="form-control"
+                  id=""
+                  rows="3"
+                  placeholder="Blog Content"
+                  name="content"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-outline-dark float-right">
+                Create Blog
+              </button>
+            </form>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <%- include('../partials/footer.ejs') %>
+
+    <!--Script-->
+    <%- include('../partials/script.ejs') %>
+  </body>
+</html>

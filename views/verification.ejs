@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--Head-->
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <div
+      class="container"
+      style="display: flex; align-items: center; justify-content: center"
+    >
+      <div class="card p-4 my-5 mx-2 shadow" style="max-width: 400px">
+        <%if(sucess===true){%>
+        <div class="text-center m-2 p-2">
+          <i class="far fa-2x fa-check-circle"></i>
+        </div>
+
+        <%}else{%>
+        <div class="text-center m-2 p-2">
+          <i class="far fa-2x fa-times-circle"></i>
+        </div>
+
+        <%}%>
+        <h4 class="text-center"><%= title %></h4>
+        <p><%= msg %></p>
+        <h6>Redirect to Homepage in <pk class="sec">2</pk> secounds</h6>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <%- include('./partials/footer.ejs') %>
+
+    <!--Script-->
+    <%- include('./partials/script.ejs') %>
+  </body>
+  <script>
+    const sec = document.querySelector("pk.sec");
+    var secd = 1;
+    const secInt = setInterval(() => {
+      sec.textContent = secd;
+      secd = secd - 1;
+    }, 3000);
+    setTimeout(function () {
+      window.location = "/";
+      clearInterval(secInt);
+    }, 5000);
+  </script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--Head-->
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <!--Nav-->
+    <%- include('../partials/nav.ejs') %>
+
+    <!--Alert-->
+    <%- include('../partials/alert.ejs') %>
+
+    <!--Index Body-->
+
+    <% if (blogs.length > 0) { %>
+      <% blogs.forEach((itm)=>{ %>
+
+        <div class="container">
+          <div class="card my-3 mx-2 shadow">
+            <div class="card-body">
+              <h5 class="card-title"><%= itm.head %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= itm.subHead %></h6>
+              <p class="card-text" >
+                <div class="blogWrap">
+                  <%= itm.content %>
+                </div>
+               
+              </p>
+              <a href="/<%= path %>/<%= itm._id %>" class="card-link float-right m-2"><%= control%></a>
+            </div>
+          </div>
+        </div>
+
+     <% }) %>
+   <% }else{ %>
+
+    <div class="container">
+      <div class="card my -3 mx-2">
+        <div class="card-body">
+          <h5 class="card-title">Nothing to display</h5>
+        </div>
+      </div>
+    </div>
+   
+    <% }  %>
+
+
+    <!--Footer-->
+    <%- include('../partials/footer.ejs') %>
+
+    <!--Script-->
+    <%- include('../partials/script.ejs') %>
+  </body>
+</html>
