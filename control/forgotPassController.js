@@ -23,12 +23,20 @@ const forgot_password_post = async (req, res) => {
       const url = `${process.env.HOST}reset-password/${tok}`;
       await User.updateOne({ email }, { updateFlag: true });
       console.log(url);
-      let info = await transporter.sendMail({
-        from: '"Wuhuu 👻" <noreaply@wuhu.com>', // sender address
-        to: email, // list of receivers
-        subject: "Wuhu Account Recovery✔",
-        text: url,
-      });
+      try{
+        let info = await transporter.sendMail({
+          from: 'dennis.mac.002@gmail.com', // sender address
+          to: email, // list of receivers
+          subject: "Wuhu Account Recovery✔",
+          html:`<h2>Welocome to Wuhuu</h2>
+                <h4>Password Recovery</h4>
+                <a href='${url}'>Click me to reset your password!</a>
+                <p>NB: This mail is valid for only 20 minutes</p>`,
+        });
+      }catch(err){
+        console.log(err)
+      }
+
       const user = { status: "Password reset Link sent to your email" };
       res.json({ user });
     }

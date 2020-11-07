@@ -3,19 +3,16 @@ const User = require("../model/user");
 const dotenv = require("dotenv");
 dotenv.config();
 const nodemailer = require("nodemailer");
+const sendgridTranspotrt = require('nodemailer-sendgrid-transport')
 //onst { updateOne } = require('../model/user');
 
 //transport
 
-let transporter = nodemailer.createTransport({
-  service: "gmail",
-  //port: 587,
-  //secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.TRN_EMAIL,
-    pass: process.env.TRN_PSWD,
-  },
-});
+const transporter = nodemailer.createTransport(sendgridTranspotrt({
+  auth:{
+    api_key:process.env.SG_API
+  }
+}))
 //Validation
 const handleErr = (err) => {
   const errors = {
@@ -79,14 +76,19 @@ const sign_in_post = async (req, res) => {
           { expiresIn: "20m" }
         );
         const url = `${process.env.HOST}verify-account/${tok}`;
-        let info = await transporter.sendMail({
-          from: '"Wuhuu 👻" <noreaply@wuhu.com>', // sender address
-          to: email, // list of receivers
-          subject: "Wuhu Account Verification ✔",
-          //html: "<h2>Account verification link</h2>",
-          text: url,
-        });
-
+        try{
+          let info = await transporter.sendMail({
+            from: 'dennis.mac.002@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: "Wuhu Account Verification ✔",
+            html:`<h2>Welocome to Wuhuu</h2>
+                <h4>Verify your account</h4>
+                <a href='${url}'>Click me to verify your account!</a>
+                <p>NB: This mail is valid for only 20 minutes</p>`,
+          });
+        }catch(err){
+          console.log(err)
+        }
         console.log(url);
         const user = { status: "Verification Link sent to your email" };
         res.json({ user });
