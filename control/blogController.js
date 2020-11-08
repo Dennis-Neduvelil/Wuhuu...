@@ -22,7 +22,8 @@ const blog_details = (req, res) => {
     if(err){
       res.status(404).render("404", { title: 404 });
     }else{
-      const userid= result.user
+      try{
+        const userid= result.user
       User.findById(userid,(err,data)=>{
         if(err){
           res.status(404).render("404", { title: 404 });
@@ -38,10 +39,13 @@ const blog_details = (req, res) => {
           });
         }
       })
+      }catch{
+        res.status(404).render("404", { title: 404 });
+      }
     }
   })
 };
-//Delete Button
+
 
 
 module.exports = {

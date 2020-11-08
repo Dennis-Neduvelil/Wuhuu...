@@ -45,6 +45,7 @@ const user_blog_details = (req, res) => {
       if(err){
         res.status(404).render("404", { title: 404 });
       }else{
+       try{
         const userid= result.user
         User.findById(userid,(err,data)=>{
           if(err){
@@ -62,6 +63,10 @@ const user_blog_details = (req, res) => {
             });
           }
         })
+       }catch(err){
+        res.status(404).render("404", { title: 404 });
+       }
+
       }
     })
   };
