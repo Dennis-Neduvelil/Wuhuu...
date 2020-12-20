@@ -2,18 +2,37 @@ const Blog = require("../model/blog");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
+
+
 //New Blog Page
 const newBlog_get = (req, res) => {
   res.render("blogs/create", { title: "New Blog", alert: "Create New One" });
 };
 //New Blog Submission
-const newBlog_post = (req, res) => {
+const newBlog_post =(req, res) => {
   const token = req.cookies.jwtoken;
   if (token) {
     jwt.verify(token, process.env.JWT_SEC, (err, decoded) => {
       if (err) {
         res.redirect("/log-in");
       } else {
+        if(req.file){
+          const userid = decoded.id;
+        const blog = new Blog({
+          head: req.body.head,
+          subHead: req.body.subHead,
+          content: req.body.content,
+          user: userid,
+          image:req.file.filename
+        });
+        blog.save((err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.redirect("/user"); 
+          }
+        });
+        }else{
         const userid = decoded.id;
         const blog = new Blog({
           head: req.body.head,
@@ -25,9 +44,10 @@ const newBlog_post = (req, res) => {
           if (err) {
             console.log(err);
           } else {
-            res.redirect("/");
+            res.redirect("/user"); 
           }
         });
+        }
       }
     });
   } else {

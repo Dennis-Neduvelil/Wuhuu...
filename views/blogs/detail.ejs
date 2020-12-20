@@ -10,7 +10,7 @@
     <%- include('../partials/alert.ejs') %>
 
     <!--Index Body-->
-        
+      <div class="start">
         <div class="container">
           <div class="card my-3 mx-2">
             <div class="card-body shadow">
@@ -20,6 +20,11 @@
               <h4 class="card-title"><%= blog.head %></h4>
               <h6 class="card-subtitle mb-2 text-muted"><%= blog.subHead %></h6>
               <hr>
+              <%if (blog.image){ %>
+                <div class="d-flex justify-content-center">
+                <img src="/uploads/<%= blog.image %>" alt="img" class="up-image">
+                </div>
+               <% } %>
               <p class="card-text">
                 <%= blog.content %>
               </p>
@@ -32,6 +37,7 @@
             </div>
           </div>
         </div>
+      </div>
     
 
     <!--Footer-->

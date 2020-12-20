@@ -21,7 +21,7 @@ const forgot_password_post = async (req, res) => {
         expiresIn: "20m",
       });
       const url = `${process.env.HOST}reset-password/${tok}`;
-      await User.updateOne({ email }, { updateFlag: true });
+      await User.updateOne({ email }, { updateFlag: tok });
       console.log(url);
       try{
         let info = await transporter.sendMail({

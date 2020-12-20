@@ -7,6 +7,7 @@
     <%- include('../partials/nav.ejs') %>
 
     <!--Alert-->
+
     <%- include('../partials/alert.ejs') %>
 
     <!--Index Body-->
@@ -19,9 +20,7 @@
             <div class="card-body">
               <h5 class="card-title"><%= itm.head %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= itm.subHead %></h6>
-              <% if(title==='Home'){ %>
-              <h6 class="card-subtitle mt-2 mb-2 text-muted"><%=`Author: ${itm.user.fname} ${itm.user.lname}`%></h6>
-              <% } %>
+              <h6 class="card-subtitle mt-2 mb-2 text-muted"><%=`Author: ${user.fname} ${user.lname}`%></h6>
               <%if (itm.image){ %>
               <div class="d-flex justify-content-center">
               <img src="/uploads/<%= itm.image %>" alt="img" class="up-image">

@@ -27,9 +27,12 @@ const userSchema = new Schema(
       required: true,
     },
     updateFlag: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: 'false',
     },
+    profile:{
+      type:String
+    }
   },
   { timestamps: true }
 );

@@ -12,5 +12,5 @@ const router = express.Router();
  router.get("/about-us", (req, res) => {
     res.redirect("/about");
   });
-
+  
 module.exports =router;

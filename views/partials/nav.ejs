@@ -1,17 +1,42 @@
 <div>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <% if (userName){ %>
-    <a class="navbar-brand" href="/">Wuhuu... <small style="color: teal;"> Welcome,&nbsp; <%= userName%></small> </a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex align-items-start">
+    <% if (userName){ %>
+    <a class="navbar-brand" href="/"
+      >Wuhuu...
+      <small style="color: teal"> Welcome,&nbsp; <%= userName%></small>
+    </a>
     <%} else{%>
     <a class="navbar-brand" href="/">Wuhuu...</a>
     <% } %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ml-auto">
+        <form class="search-form">
+          <div class="form-group mb-0 m-1">
+            <input
+              type="text"
+              class="form-control search-input"
+              id="search-txt"
+              placeholder="Search Here"
+              autocomplete="off"
+            />
+          </div>
+          <div class="listser">
+            <div class="list-group m-1 list-dark  ser-list"></div>
+          </div>
+        </form>
+
         <% if (userName){ %>
-        <a class="nav-link"> </a>
         <a class="nav-link" href="/">All Blogs</a>
         <a class="nav-link" href="/user">Your Blogs</a>
         <a class="nav-link" href="/newblog">New Blog</a>
@@ -25,4 +50,50 @@
       </div>
     </div>
   </nav>
+
+  <div class="container">
+    <div class="row">
+      <!-- <div class="listser">
+      <div class="list-group mx-4 my-2 ser-list"></div>
+    </div> -->
+    </div>
+  </div>
 </div>
+
+<script>
+  const ser = document.querySelector("input.search-input");
+  const list = document.querySelector("div.ser-list");
+  ser.addEventListener("input", async (event) => {
+    const search = ser.value;
+    if (search === "") {
+      list.innerHTML = "";
+    }
+    try {
+      const resp = await fetch("/blogs/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ search }),
+      });
+      const data = await resp.json();
+      list.innerHTML = "";
+      if (data.length > 0) {
+        data.forEach((element) => {
+          var a = document.createElement("a");
+          var link = document.createTextNode(
+            `${element.fname} ${element.lname}`
+          );
+          a.appendChild(link);
+          a.className = "list-group-item list-group-item-action";
+          a.href = `blogs/profile/${element._id}`;
+          list.appendChild(a);
+        });
+      } else {
+        var a = document.createElement("a");
+        var link = document.createTextNode("No Results");
+        a.appendChild(link);
+        a.className = "list-group-item list-group-item-action";
+        list.appendChild(a);
+      }
+    } catch {}
+  });
+</script>

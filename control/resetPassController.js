@@ -67,12 +67,12 @@ const reset_password_put = async (req, res) => {
             try {
               const { email } = decoded;
               const { updateFlag } = await User.findOne({ email });
-              if (updateFlag === true) {
+              if (updateFlag === tok) {
                 const salt = await bcrypt.genSalt();
                 password = await bcrypt.hash(password, salt);
                 await User.updateOne(
                   { email },
-                  { password, updateFlag: false }
+                  { password, updateFlag: 'false'}
                 );
                 const user = {
                   status:
@@ -82,7 +82,7 @@ const reset_password_put = async (req, res) => {
               } else {
                 const user = {
                   status:
-                    "Password updation failed, you are trying to use once used link",
+                    "Password updation failed, you are trying to use once used link or expired link",
                 };
                 res.json({ user });
               }

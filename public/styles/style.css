@@ -22,7 +22,6 @@ form strong{
     color: red;
 }
 .blogWrap{
-    height: 200px;
     max-height: 200px;
     overflow: scroll;
     padding-right: 20px;
@@ -41,4 +40,31 @@ form strong{
     color: black;
     text-decoration: none;
     font-weight: 700;
+}
+.up-image{
+    width: 100%;
+    height: auto;
+}
+
+.ser-list a{
+    font-weight: bold;
+}
+.card{
+    max-width: 700px;
+}
+.container{
+    display: flex;
+    justify-content: center;
+}
+.alert{
+    width: 700px;
+    margin-top: 50px;
+}
+.navbar{
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+.start-log{
+    margin-top: 50px;
 }

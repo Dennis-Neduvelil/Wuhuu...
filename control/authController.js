@@ -106,7 +106,7 @@ const log_in_post = async (req, res) => {
     const user = await User.login(email, password);
     const tok = jwtGen(user._id, process.env.JWT_SEC, tokAge);
     res.cookie("jwtoken", tok, { httpOnly: true, maxAge: tokAge * 1000 });
-    res.json({ user });
+    res.json({user:`${user.fname} ${user.lname}`,status:'login-sucess'});
   } catch (err) {
     const errs = handleErr(err);
     res.json({ errs });

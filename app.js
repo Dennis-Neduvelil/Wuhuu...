@@ -8,8 +8,11 @@ const blogNewBlogRoutes = require("./routes/blogNewBlogRoutes");
 const userBlogRouter =require('./routes/userBolgRouter')
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+const path =  require("path");
+
 const { jwtverify, userCheck } = require("./middilewares/jwtVerify");
+
 const dotenv = require("dotenv");
 dotenv.config();
 //Express App
@@ -21,7 +24,10 @@ mongoConnection(mdbcnt, app);
 // register view
 app.set("view engine", "ejs");
 //Middlewares
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -40,6 +46,8 @@ app.use('/user',userBlogRouter)
 app.use("/newblog", jwtverify, blogNewBlogRoutes);
 //blogupdate
 app.use("/update", jwtverify, blogUpdateRoute);
+
+
 //404
 app.use(errRoutes);
 //////****Routes***///////

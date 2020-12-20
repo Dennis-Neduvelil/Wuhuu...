@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
+const User = require("../model/user");
 const Schema = mongoose.Schema
 //Blog Schema
 const blogSchema = new Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'user'
+        ref:'User'
     },
     head:{
         type:String,
@@ -17,6 +18,9 @@ const blogSchema = new Schema({
     content:{
         type:String,
         required: true
+    },
+    image:{
+        type:String
     }
 },{timestamps:true});
 
