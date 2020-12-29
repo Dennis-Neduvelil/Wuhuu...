@@ -17,15 +17,15 @@ const user_blog_index = async (req, res) => {
           if (err) {
             res.redirect("/log-in");
           } else {
-            const author = `${resultu.fname} ${resultu.lname}`;
+            const userDtl = {fname:resultu.fname,lname:resultu.lname,email:resultu.email,desigination:resultu.desigination};
 
             Blog.find({ user: userid })
               .select("_id head subHead content image")
               .sort({ createdAt: -1 })
               .then((result) => {
-                res.render("blogs/index", {
+                res.render("blogs/profile", {
                   title: "Your Blogs",
-                  alert: `Blogs by ${author}`,
+                  user:userDtl,
                   blogs: result,
                   control: "More Options",
                   path: "user",

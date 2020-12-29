@@ -72,7 +72,13 @@ const user_profile = async (req, res) => {
       .select("head subHead content image")
       .sort({ updatedAt: -1 })
       .sort({ createdAt: -1 });
-      res.render("blogs/profile",{user,blogs,path:'blogs',titile:'profile',control: "Read More"})
+    res.render("blogs/profile", {
+      user,
+      blogs,
+      path: "blogs",
+      title: "profile",
+      control: "Read More",
+    });
   } catch {
     console.log(err);
     res.status(404).render("404", { title: 404 });

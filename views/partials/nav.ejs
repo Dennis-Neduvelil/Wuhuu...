@@ -39,7 +39,6 @@
         <% if (userName){ %>
         <a class="nav-link" href="/">All Blogs</a>
         <a class="nav-link" href="/user">Your Blogs</a>
-        <a class="nav-link" href="/newblog">New Blog</a>
         <a class="nav-link" href="/about">About</a>
         <a class="nav-link" href="/log-out"> <strong>Log Out</strong> </a>
         <%} else{%>
@@ -84,7 +83,7 @@
           );
           a.appendChild(link);
           a.className = "list-group-item list-group-item-action";
-          a.href = `blogs/profile/${element._id}`;
+          a.href = `https://wuhuu-blogs.herokuapp.com/blogs/profile/${element._id}`;
           list.appendChild(a);
         });
       } else {
