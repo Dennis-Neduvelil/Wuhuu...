@@ -61,3 +61,8 @@ form strong{
 .start-log{
     margin-top: 100px;
 }
+@media screen and (min-width: 992px) {
+  .navbar{
+      height: 60px;
+  }
+  }
