@@ -18,6 +18,14 @@
             <form action="/newblog" method="POST" enctype="multipart/form-data">
                 <h4 class="text-center">New Blog</h4>
               <div class="form-group">
+                <div class="d-flex justify-content-center mt-4">
+                  <img  src="public/assets/up-imgs.png" alt="img" class="up-image">
+                  </div>
+                  <div class="form-group mt-2">
+                    <h6>Uplaod photo (optional)</h6>
+                    <small><b>(Its reccomented to upload images with ratio 16:6 for better appereance)</b></small>
+                    <input type="file" class="form-control-file img-up" id="image" name="image" accept="image/*">
+                  </div>
                 <label for="">Blog title</label>
                 <input
                   type="text"
@@ -50,11 +58,6 @@
                   required
                 ></textarea>
               </div>
-              <div class="form-group">
-                <h6 >Uplaod photo (optional)</h6>
-                <small><b>(Its reccomented to upload images with ratio 16:6 for better appereance)</b></small>
-                <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
-              </div>
               <button type="submit" class="btn btn-outline-dark float-right">
                 Create Blog
               </button>
@@ -70,5 +73,21 @@
 
     <!--Script-->
     <%- include('../partials/script.ejs') %>
+    <script>
+      let fileButton = document.querySelector('input.img-up')
+      let img= document.querySelector('img.up-image')
+      fileButton.addEventListener('change' , ()=>{
+
+        const file = fileButton.files[0];
+        if(file){
+          const reader = new FileReader();
+          reader.onload = ()=>{
+          img.src=reader.result;
+          }
+          reader.readAsDataURL(file);
+        }
+        
+      })
+    </script>
   </body>
 </html>

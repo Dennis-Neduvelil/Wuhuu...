@@ -18,14 +18,22 @@
             <form action="/update/<%= blog._id %>" method="POST" enctype="multipart/form-data">
                 <h4 class="text-center">Update Blog</h4>
               <div class="form-group">
-
                 <%if (blog.image){ %>
                   <div class="d-flex justify-content-center mt-4">
-                  <img src="  <%= blog.image %>" alt="img" class="up-image">
+                  <img  src="  <%= blog.image %>" alt="img" class="up-image">
                   </div>
-                  <a href="/update/delete/<%=blog._id%>" class="btn btn-outline-dark w-100 my-2">Delete / Update New Image</a>
-                 <% } %>
+                 <% }else{ %>
+                  <div class="d-flex justify-content-center mt-4">
+                    <img  src="/public/assets/up-imgs.png" alt="no image uploaded" class="up-image">
+                    </div>
+                  <% }%>
                 <br/>
+                <div class="form-group">
+                  <h6 >Uplaod photo (optional)</h6>
+                  <small><b>(Its reccomented to upload images with ratio 16:6 for better appereance)</b></small>
+                  <input type="file" class="form-control-file img-up" id="image" name="image">
+                </div>
+
                 <label for="">Blog title</label>
                 <input
                   type="text"
@@ -61,13 +69,8 @@
                   required
                 > <%= blog.content %> </textarea>
               </div>
-              <%if (!blog.image){ %>
-              <div class="form-group">
-                <h6 >Uplaod photo (optional)</h6>
-                <small><b>(Its reccomented to upload images with ratio 16:6 for better appereance)</b></small>
-                <input type="file" class="form-control-file" id="image" name="image"  value="uploads/<%=blog.image %>">
-              </div>
-              <% } %>
+              
+
               <button type="submit" class="btn btn-outline-dark float-right">
                 Update
               </button>
@@ -83,5 +86,21 @@
 
     <!--Script-->
     <%- include('../partials/script.ejs') %>
+    <script>
+      let fileButton = document.querySelector('input.img-up')
+      let img= document.querySelector('img.up-image')
+      fileButton.addEventListener('change' , ()=>{
+
+        const file = fileButton.files[0];
+        if(file){
+          const reader = new FileReader();
+          reader.onload = ()=>{
+          img.src=reader.result;
+          }
+          reader.readAsDataURL(file);
+        }
+        
+      })
+    </script>
   </body>
 </html>

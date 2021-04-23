@@ -1,9 +1,10 @@
 const Blog = require("../model/blog");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
+const cloudinary = require("../control/cloud");
 const dotenv = require("dotenv");
 dotenv.config();
-const fs = require("fs");
+
 //Landing page
 const user_blog_index = async (req, res) => {
   const token = req.cookies.jwtoken;
@@ -74,13 +75,8 @@ const user_blog_details = (req, res) => {
 };
 const user_blog_delete = async (req, res) => {
   const id = req.params.id;
-  const { image } = await Blog.findById(id);
-  if (image) {
-    fs.unlink(`uploads/${image}`, (err) => {
-      if (err) throw err;
-      console.log("File deleted!");
-    });
-  }
+  const {cloud_id} = await Blog.findById(id)
+  await cloudinary.uploader.destroy(cloud_id);
   Blog.findByIdAndDelete(id)
     .then((result) => {
       res.json({ redir: "/user" });

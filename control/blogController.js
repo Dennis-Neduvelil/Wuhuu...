@@ -18,7 +18,7 @@ const blog_index = (req, res) => {
     .catch((err) => console.log(err));
 };
 //Detail Page
-const blog_details = (req, res) => {
+const blog_details =  (req, res) => {
   const id = req.params.id;
   Blog.findById(id, (err, result) => {
     if (err) {

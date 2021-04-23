@@ -7,6 +7,4 @@ router.get("/:id",blogUpdateController.update_get );
   
 router.post("/:id",upload.single('image'),blogUpdateController.update_post );
 
-router.get('/delete/:id',blogUpdateController.image_delete)
-
 module.exports = router;

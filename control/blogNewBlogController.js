@@ -40,6 +40,7 @@ const newBlog_post = (req, res) => {
             }else if(err)
             {
               console.log(err)
+              res.status(404).render("404", { title: 404 });
             }
           });  
         } else {

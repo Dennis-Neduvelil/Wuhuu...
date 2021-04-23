@@ -1,5 +1,5 @@
 const Blog = require("../model/blog");
-const fs = require('fs')
+const cloudinary = require("../control/cloud");
 //Update Page
 const update_get = (req, res) => {
   const id = req.params.id;
@@ -16,25 +16,35 @@ const update_get = (req, res) => {
     });
 };
 //Update page submission
-const update_post = (req, res) => {
-  console.log(req.file);
+const update_post = async(req, res) => {
   const id = req.params.id;
+  const {cloud_id} = await Blog.findById(id) 
   if (req.file) {
-    Blog.updateOne(
-      { _id: id },
-      {
-        head: req.body.head,
-        subHead: req.body.subHead,
-        content: req.body.content,
-        image: req.file.filename,
+    cloudinary.uploader.upload(req.file.path, async(err,result)=>{
+      if (result){
+        await cloudinary.uploader.destroy(cloud_id);
+        Blog.updateOne(
+          { _id: id },
+          {
+            head: req.body.head,
+            subHead: req.body.subHead,
+            content: req.body.content,
+            image: result.secure_url
+          }
+        )
+          .then((result) => {
+            res.redirect("/user");
+          })
+          .catch((err) => {
+            res.status(404).render("404", { title: 404 });
+          });
+
       }
-    )
-      .then((result) => {
-        res.redirect("/user");
-      })
-      .catch((err) => {
+      if(err){
+        console.log(err)
         res.status(404).render("404", { title: 404 });
-      });
+      }
+    })
   } else {
     Blog.updateOne(
       { _id: id },
@@ -53,22 +63,8 @@ const update_post = (req, res) => {
   }
 };
 
-const image_delete = async (req,res)=>{
-const id = req.params.id
-const {image} = await Blog.findById({_id:id}).select('-_id image')
-fs.unlink(`uploads/${image}`, (err)=> {
-  if (err) throw err;
-  console.log('File deleted!');
-}); 
-Blog.updateOne({_id: id}, {$unset:{image:''}}).then(()=>{
-  res.redirect(`/update/${id}`)
-}).catch((err)=>{
-  res.json({id, msg: err })
-  console.log(err)
-})
-}
+
 module.exports = {
   update_get,
   update_post,
-  image_delete
 };
