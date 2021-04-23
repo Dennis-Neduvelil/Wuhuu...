@@ -48,7 +48,7 @@
               <h6 class="card-subtitle mt-2 mb-2 text-muted"><%=`Author: ${user.fname} ${user.lname}`%></h6>
               <%if (itm.image){ %>
               <div class="d-flex justify-content-center">
-              <img src="/uploads/<%= itm.image %>" alt="img" class="up-image">
+              <img src="<%= itm.image %>" alt="img" class="up-image">
               </div>
              <% } %>
               <p class="card-text" >

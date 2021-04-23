@@ -22,6 +22,10 @@ const blogSchema = new Schema({
     image:{
         type:String
     }
+    ,
+    cloud_id:{
+        type:String
+    }
 },{timestamps:true});
 
 const Blog =mongoose.model('Blog',blogSchema);
