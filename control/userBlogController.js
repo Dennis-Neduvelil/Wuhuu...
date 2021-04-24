@@ -18,7 +18,7 @@ const user_blog_index = async (req, res) => {
           if (err) {
             res.redirect("/log-in");
           } else {
-            const userDtl = {fname:resultu.fname,lname:resultu.lname,email:resultu.email,desigination:resultu.desigination};
+            const userDtl = {fname:resultu.fname,lname:resultu.lname,email:resultu.email,desigination:resultu.desigination,avatar:resultu.avatar,_id:resultu._id};
 
             Blog.find({ user: userid })
               .select("_id head subHead content image")
@@ -85,8 +85,44 @@ const user_blog_delete = async (req, res) => {
       res.status(404).render("404", { title: 404 });
     });
 };
+
+const user_profile_update = async (req,res)=>{
+  const id = await req.params.id;
+  const fname = await req.body.fname
+  const lname = await req.body.lname
+  const gender= await req.body.gender
+  const desc= await req.body.desc
+  let usrAvatar='public/assets/avatar.png'
+
+  if(gender=='male'){
+    usrAvatar='public/assets/male.png'
+  }else if(gender=='female'){
+    usrAvatar='public/assets/female.png'
+  }else if(gender=='human'){
+    usrAvatar='public/assets/human.png'
+  }
+
+  User.updateOne(
+    { _id: id },
+    {
+      fname:fname,
+      lname:lname,
+      avatar:usrAvatar,
+      desigination:desc
+    }
+  )
+    .then((result) => {
+      res.redirect("/user");
+    })
+    .catch((err) => {
+      res.status(404).render("404", { title: 404 });
+    });
+
+}
+
 module.exports = {
   user_blog_index,
   user_blog_details,
   user_blog_delete,
+  user_profile_update
 };

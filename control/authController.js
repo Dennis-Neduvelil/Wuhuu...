@@ -141,6 +141,7 @@ const verify_account_get = (req, res) => {
               email,
               password,
               desigination,
+              avatar:'public/assets/avatar.png'
             });
             const tok = jwtGen(user._id, process.env.JWT_SEC);
             res.cookie("jwtoken", tok, {

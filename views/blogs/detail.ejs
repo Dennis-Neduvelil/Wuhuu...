@@ -31,14 +31,32 @@
               <% if (userStatus===false){%>
               <a href="/blogs" class="card-link float-right m-2 ">Back</a>
              <%}else{%>
-              <a href="" class="card-link float-right m-2 delete" data-apiid=<%= blog._id %> >Delete</a>
+              <a href="" class="card-link float-right m-2 " data-toggle="modal" data-target="#deleteModal" >Delete</a>
               <a href="/update/<%= blog._id %>" class="card-link float-right m-2 ">Update</a>
               <%}%>
             </div>
           </div>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure ???</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to permanentely delete this file? <br>
+                    you can also modify contents by updating post !
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-dark del-btn"  data-apiid=<%= blog._id %> >Delete Post</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
-    
 
     <!--Footer-->
     <%- include('../partials/footer.ejs') %>
@@ -46,7 +64,7 @@
     <!--Script-->
     <%- include('../partials/script.ejs') %>
     <script>
-      const bin = document.querySelector('a.delete');
+      const bin = document.querySelector('button.del-btn');
       bin.addEventListener('click', (event)=>{
         event.preventDefault();
          const api = `/user/${bin.dataset.apiid}`;

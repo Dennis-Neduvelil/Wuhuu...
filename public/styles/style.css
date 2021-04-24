@@ -71,4 +71,10 @@ form strong{
   .navbar{
       height: 60px;
   }
-  }
+}
+@media screen and (max-width: 768px) {
+.pro-txt{
+    justify-content: center;
+    text-align: center;
+}
+}

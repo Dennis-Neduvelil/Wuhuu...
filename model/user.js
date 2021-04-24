@@ -30,7 +30,10 @@ const userSchema = new Schema(
       type: String,
       default: 'false',
     },
-    profile:{
+    avatar:{
+      type:String
+    },
+    gender:{
       type:String
     }
   },

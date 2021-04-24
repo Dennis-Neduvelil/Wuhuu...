@@ -14,9 +14,9 @@
       <div class="row">
         <%if(user){%>
         <div class="col-md-3 d-flex justify-content-center align-items-center">
-       <img src="https://dwpdobr8xeaso.cloudfront.net/wgvs-images/avatars/profile_llama@4x.png" alt="img" width="200px">
+       <img src= <%= user.avatar %> alt="img" width="200px">
         </div>
-        <div class="col-md-6 d-flex align-items-center">
+        <div class="col-md-6 d-flex pro-txt">
         <div class="m-2">
         <h3> <%= `${user.fname} ${user.lname}` %></h3>
         <h5 class="text-muted"> <%= user.email %></h5>
@@ -27,7 +27,7 @@
         <% if (path==='user'){%>
           <div class="col-md-3 d-flex flex-column">
             <a href="/newblog" class="btn btn-outline-success m-1">New Post</a>
-            <a class="btn btn-outline-danger m-1">Update profile</a>
+            <a class="btn btn-outline-danger m-1" data-toggle="modal" data-target="#userUpdateModel">Update profile</a>
             <a class="btn btn-outline-warning m-1">Delete Account</a>
           </div>
 
@@ -73,10 +73,64 @@
     <% }  %>
 
 
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="userUpdateModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Update your details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+        <form action="user/updateProfile/<%= user._id %>" method="POST">
+          <div class="form-group">
+            <label for="">Email address</label>
+            <input type="email" class="form-control " id="user_up_email" aria-describedby="emailHelp" placeholder="Email" value="<%= user.email %>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="">First Name</label>
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="<%= user.fname %>">
+          </div>
+          <div class="form-group">
+            <label for="">Last Name</label>
+            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value="<%= user.lname %>">
+          </div>
+
+          <div class="form-group">
+            <label for="">Gender</label>
+            <select class="custom-select" name="gender" id="gender">
+              <option class="male" value="male" >Male</option>
+              <option class="female" value="female">Female</option>
+              <option class="human" value="human">Human</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="">Desigination</label>
+            <input type="text" class="form-control" id="desc" name="desc" placeholder="Desigination" value="<%= user.desigination %>">
+          </div>
+          <button type="submit" class="btn btn-dark ff">Update Changes</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
     <!--Footer-->
     <%- include('../partials/footer.ejs') %>
 
     <!--Script-->
     <%- include('../partials/script.ejs') %>
+    <script>
+
+     
+    </script>
   </body>
 </html>
