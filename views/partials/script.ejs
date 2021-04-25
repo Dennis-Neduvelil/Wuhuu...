@@ -1,3 +1,16 @@
+<script>
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("/public/scripts/sWorker.js").then(registration=>{
+      console.log("SW Registred")
+      console.log(registration)
+    }).catch(error=>{
+      console.log("SW not registred")
+      console.log(error)
+    })
+  }else{
+    console.log("SW not working")
+  }
+</script>
 <script
   src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

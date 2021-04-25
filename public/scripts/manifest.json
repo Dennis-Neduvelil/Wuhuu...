@@ -1,0 +1,25 @@
+{
+    "name":"Wuhuu Blogs",
+    "short_name":"Wuhuu..",
+    "start_url":"/",
+    "background_color":"black",
+    "theme_color":"black",
+    "display":"standalone",
+    "icons":[
+        {
+            "src":"/public/assets/favicon-32x32.png",
+            "sizes":"32x32",
+            "type":"image/png"
+        },
+        {
+            "src":"/public/assets/android-chrome-192x192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+        },
+        {
+            "src":"/public/assets/android-chrome-512x512.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        }
+    ]
+}
