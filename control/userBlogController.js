@@ -1,6 +1,7 @@
 const Blog = require("../model/blog");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
+const bcrypt = require("bcrypt");
 const cloudinary = require("../control/cloud");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -57,12 +58,14 @@ const user_blog_details = (req, res) => {
             res.status(404).render("404", { title: 404 });
           } else {
             const authorName = `${data.fname} ${data.lname}`;
+            const avatar = data.avatar;
             res.render("blogs/detail", {
               title: result.head,
               alert: `Details of blog, ${result.head} by ${authorName}`,
               blog: result,
               author: authorName,
               path: "user",
+              avatar:avatar,
               userStatus: true,
             });
           }
@@ -120,9 +123,41 @@ const user_profile_update = async (req,res)=>{
 
 }
 
+const user_account_delete = async (req,res)=>{
+  const email = await req.body.email
+  const password = await req.body.password
+
+  const user = await User.findOne({ email });
+  if (user) {
+    
+    const access = await bcrypt.compare(password, user.password);
+    if (access) {
+    Blog.find({user:user._id})
+    .then((result) => {
+      result.map(async(item)=>{
+        await cloudinary.uploader.destroy(item.cloud_id);
+        await Blog.findByIdAndDelete(item._id);
+      })
+      const userDel=async ()=>{
+      await User.findByIdAndDelete({_id:user._id});
+      await res.cookie("jwtoken", "", { maxAge: 1 });
+      res.json({sucess:'true'})
+      }
+      userDel();
+    })
+    .catch((err) => console.log(err));
+    }else{
+      res.json({password:'Incorrect Password'});
+    }
+    
+  }
+
+}
+
 module.exports = {
   user_blog_index,
   user_blog_details,
   user_blog_delete,
-  user_profile_update
+  user_profile_update,
+  user_account_delete
 };

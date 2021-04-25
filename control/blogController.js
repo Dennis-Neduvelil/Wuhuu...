@@ -4,7 +4,7 @@ const User = require("../model/user");
 const blog_index = (req, res) => {
   Blog.find()
     .select("head subHead content image")
-    .populate("user", "lname fname")
+    .populate("user", "lname fname avatar")
     .sort({ createdAt: -1 })
     .then((result) => {
       res.render("blogs/index", {
@@ -13,6 +13,7 @@ const blog_index = (req, res) => {
         blogs: result,
         control: "Read More",
         path: "blogs",
+
       });
     })
     .catch((err) => console.log(err));
@@ -29,12 +30,15 @@ const blog_details =  (req, res) => {
           const userid = await result.user;
           const data = await User.findById(userid).sort({ createdAt: -1 });
           const authorName = `${data.fname} ${data.lname}`;
+          const avatar = data.avatar;
           res.render("blogs/detail", {
             title: result.head,
             alert: `Details of blog, ${result.head} by ${authorName}`,
             blog: result,
             author: authorName,
+            avatar:avatar,
             userStatus: false,
+           
           });
         } catch {
           res.status(404).render("404", { title: 404 });

@@ -28,7 +28,7 @@
           <div class="col-md-3 d-flex flex-column">
             <a href="/newblog" class="btn btn-outline-success m-1">New Post</a>
             <a class="btn btn-outline-danger m-1" data-toggle="modal" data-target="#userUpdateModel">Update profile</a>
-            <a class="btn btn-outline-warning m-1">Delete Account</a>
+            <a class="btn btn-outline-warning m-1" data-toggle="modal" data-target="#deleteAcModel">Delete Account</a>
           </div>
 
        <% } %>
@@ -42,9 +42,17 @@
         <div class="container">
           <div class="card my-3 mx-2 shadow">
             <div class="card-body">
-              <h5 class="card-title"><%= itm.head %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= itm.subHead %></h6>
-              <h6 class="card-subtitle mt-2 mb-2 text-muted"><%=`Author: ${user.fname} ${user.lname}`%></h6>
+              <div class="d-flex">
+                <div class="m-1">
+                  <img  src= <%= user.avatar %> alt="img" width="50px">
+                </div>
+                <div class="m-1">
+                  <h6 class="card-subtitle text-muted"><%=`Author: ${user.fname} ${user.lname}`%></h6>
+                  <h5 class="card-title"><%= itm.head %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%= itm.subHead %></h6>
+                </div>
+              </div>
+
               <%if (itm.image){ %>
               <div class="d-flex justify-content-center">
               <img src="<%= itm.image %>" alt="img" class="up-image">
@@ -123,6 +131,59 @@
   </div>
 </div>
 
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteAcModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Enter your Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure with deletion of Acoount ?<br>
+        Once you delete it is permanent you can't recover it anymore!!!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark"  data-toggle="modal" data-target="#deleteAcPasModel" data-dismiss="modal">Delete Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteAcPasModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="r-header" id="exampleModalLongTitle">Enter your password for continue...</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="eget" data-mail=<%= user.email %>>
+        <form class="rpass">
+          <div class="form-group">
+            <label for="">Enter your password</label>
+            <input type="password" class="form-control" aria-describedby="" name="password" required>
+            <small class="form-text text-muted">Once you delete it is permanent you can't recover it anymore!!!</small>
+            <strong class="rpass"></strong>
+          </div>
+          <button type="submit" class="btn btn-outline-dark rpass">Delete Account</button>
+      </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
     <!--Footer-->
     <%- include('../partials/footer.ejs') %>
 
@@ -130,6 +191,43 @@
     <%- include('../partials/script.ejs') %>
     <script>
 
+  const pass = document.querySelector('strong.rpass')
+  const form = document.querySelector('form.rpass')
+  const but = document.querySelector('button.rpass')
+  const header = document.querySelector('h5.r-header')
+  const email = document.querySelector('div.eget').dataset.mail
+ 
+  form.addEventListener('submit',async(event)=>{
+      event.preventDefault()
+      pass.textContent=''
+      but.disabled = true
+      const password = form.password.value
+      try{
+          const res = await fetch('user/delete-account',{
+              method:'POST',
+              headers: {'Content-Type' : 'application/json'},
+              body:JSON.stringify({password,email})   
+          })
+      const data = await res.json();
+      console.log(data)
+
+      if(data.password){
+        pass.textContent = data.password
+        but.disabled = false
+      }
+      if(data.sucess){
+        header.textContent='Account Deleted !'
+        pass.textContent = 'Account deleted redirecting to log-in page...'
+        but.textContent ='Redirecting...'
+      setTimeout(function () {
+      window.location.href = "/log-in";
+    }, 3000);
+      }
+    }
+    catch(err){
+      console.log(err)
+    }
+  })
      
     </script>
   </body>

@@ -14,11 +14,14 @@
         <div class="container">
           <div class="card my-3 mx-2">
             <div class="card-body shadow">
-              
-               Author: <%= author%>
-              <hr>
-              <h4 class="card-title"><%= blog.head %></h4>
-              <h6 class="card-subtitle mb-2 text-muted"><%= blog.subHead %></h6>
+              <div class="d-flex">
+                <div class="m-1"><img  src= /<%= avatar %> alt="img" width="50px"></div>
+                <div class="m-1">
+                  <h6> Author: <%= author%></h6>
+                  <h5 class="card-title"><%= blog.head %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%= blog.subHead %></h6>
+                </div>              
+              </div>          
               <hr>
               <%if (blog.image){ %>
                 <div class="d-flex justify-content-center">
@@ -26,7 +29,9 @@
                 </div>
                <% } %>
               <p class="card-text">
-                <%= blog.content %>
+                <div class="blogWrap">
+                  <%= blog.content %>
+                </div>
               </p>
               <% if (userStatus===false){%>
               <a href="/blogs" class="card-link float-right m-2 ">Back</a>
