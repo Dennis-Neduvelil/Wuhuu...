@@ -70,7 +70,7 @@ const user_profile = async (req, res) => {
   const id = req.params.id;
   try {
     const user = await User.findById(id).select(
-      "fname lname desigination email profile -_id avatar"
+      "fname lname desigination email profile avatar -_id "
     );
     const blogs = await Blog.find({ user: id })
       .select("head subHead content image")
