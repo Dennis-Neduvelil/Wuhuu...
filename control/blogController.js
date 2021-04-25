@@ -69,9 +69,7 @@ const user_search = async (req, res) => {
 const user_profile = async (req, res) => {
   const id = req.params.id;
   try {
-    const user = await User.findById(id).select(
-      "fname lname desigination email profile avatar -_id "
-    );
+    const user = await User.findById(id)
     const blogs = await Blog.find({ user: id })
       .select("head subHead content image")
       .sort({ updatedAt: -1 })
