@@ -1,8 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,900&display=swap');
+:root{
+    --bg-clr:white;
+    -txt-clr:black;
+    --bor-clr:white;
+    --hr-clr:black;
+}
 body{
     font-family: 'Lato', sans-serif;
     overflow-x: hidden;
+    background-color: var(--bg-clr);
+    color:var(--txt-clr);
 }
+
 html{
     overflow-x: hidden;
 }
@@ -27,7 +36,10 @@ form strong{
     padding-right: 20px;
 }
 .blogWrap::-webkit-scrollbar{
-    width: 5px;
+    width: 5px; 
+}
+.blogWrap::-webkit-scrollbar-corner{
+    background-color:transparent;
 }
 .blogWrap::-webkit-scrollbar-thumb{
     background-color:teal;
@@ -37,7 +49,7 @@ form strong{
     width: 100px;
 }
 .link a{
-    color: black;
+    color: var(--txt-clr);
     text-decoration: none;
     font-weight: 700;
 }
@@ -77,4 +89,37 @@ form strong{
     justify-content: center;
     text-align: center;
 }
+}
+
+
+.card{
+    background-color: var(--bg-clr);
+    border-color: var(--bor-clr);
+}
+.pr-hr{
+    background-color: var(--hr-clr);
+    width: 950%;
+    height: 1px;
+    border-radius: 10px;
+}
+
+.tDark{
+    --bg-clr:black;
+    --txt-clr:white;
+    --bor-clr:green;
+    --hr-clr:green;
+}
+@media (prefers-color-scheme:dark){
+    .tAuto{
+        --bg-clr:black;
+        --txt-clr:white;
+        --bor-clr:green;
+        --hr-clr:green; 
+    }
+}
+.modal{
+    color: black;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+    background-color: transparent;
 }

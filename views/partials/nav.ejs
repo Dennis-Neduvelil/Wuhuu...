@@ -1,3 +1,4 @@
+<body class="tAuto">
 <div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex align-items-start">
     <% if (userName){ %>
@@ -39,10 +40,30 @@
         <% if (userName){ %>
         <a class="nav-link" href="/">All Blogs</a>
         <a class="nav-link" href="/user">Your Blogs</a>
+       
+
+        <div class="dropdown">
+          <a class="nav-link" id="themeMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Theme</a>
+          <div class="dropdown-menu" aria-labelledby="themeMenuButton">
+            <option class="dropdown-item tAuto">Automatic Mode</option>
+            <option class="dropdown-item tDark">Dark Mode</option>
+            <option class="dropdown-item tLight">Light Mode</option>
+          </div>
+        </div>
         <a class="nav-link" href="/about">About</a>
         <a class="nav-link" href="/log-out"> <strong>Log Out</strong> </a>
         <%} else{%>
         <a class="nav-link" href="/">All Blogs</a>
+      
+        
+        <div class="dropdown">
+          <a class="nav-link" id="themeMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Theme</a>
+          <div class="dropdown-menu" aria-labelledby="themeMenuButton">
+            <option class="dropdown-item tAuto">Automatic Mode</option>
+            <option class="dropdown-item tDark">Dark Mode</option>
+            <option class="dropdown-item tLight">Light Mode</option>
+          </div>
+        </div>
         <a class="nav-link" href="/about">About</a>
         <a class="nav-link" href="/log-in"><strong>Log In</strong></a>
         <% } %>
@@ -95,4 +116,30 @@
       }
     } catch {}
   });
+</script>
+<script>
+  let theme=localStorage.getItem("theme") || "tAuto"
+
+  const applyTheme = (theme)=>{
+    document.body.classList.remove("tAuto","tDark","tLight");
+    document.body.classList.add(theme)
+  }
+  
+  applyTheme(theme);
+  document.querySelector('option.tAuto').addEventListener('click',()=>{
+    let selTheme='tAuto'
+    applyTheme(selTheme);
+    localStorage.setItem("theme",selTheme);
+  })
+  document.querySelector('option.tLight').addEventListener('click',()=>{
+    let selTheme='tLight'
+    applyTheme(selTheme);
+    localStorage.setItem("theme",selTheme);
+  })
+  document.querySelector('option.tDark').addEventListener('click',()=>{
+    let selTheme='tDark'
+    applyTheme(selTheme);
+    localStorage.setItem("theme",selTheme);
+  })
+
 </script>
