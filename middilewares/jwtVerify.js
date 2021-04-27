@@ -26,8 +26,12 @@ const userCheck = (req, res, next) => {
         res.locals.userName = null;
         next();
       } else {
-        let user = await User.findById(decoded.id);
-        res.locals.userName = user.fname;
+        await User.findById(decoded.id).then(result=>{
+          res.locals.userName = result.fname;
+        }).catch(err=>{
+          res.locals.userName = null;
+        })
+       
         next();
       }
     });

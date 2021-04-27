@@ -18,7 +18,7 @@ const update_get = (req, res) => {
 //Update page submission
 const update_post = async(req, res) => {
   const id = req.params.id;
-  const {cloud_id} = await Blog.findById(id) 
+  const {cloud_id} = await Blog.findById(id);
   if (req.file) {
     cloudinary.uploader.upload(req.file.path, async(err,result)=>{
       if (result){
