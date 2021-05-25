@@ -79,7 +79,10 @@ const user_blog_details = (req, res) => {
 const user_blog_delete = async (req, res) => {
   const id = req.params.id;
   const {cloud_id} = await Blog.findById(id)
+  if(cloud_id)
+  {
   await cloudinary.uploader.destroy(cloud_id);
+  }
   Blog.findByIdAndDelete(id)
     .then((result) => {
       res.json({ redir: "/user" });
